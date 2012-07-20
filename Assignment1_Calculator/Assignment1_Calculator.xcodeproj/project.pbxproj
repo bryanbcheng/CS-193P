@@ -15,6 +15,7 @@
 		EE3B109915B8FA9800054BA4 /* CalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */; };
 		EE3B109C15B8FA9800054BA4 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */; };
 		EE3B109F15B8FA9800054BA4 /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */; };
+		EE3B10AB15B9098300054BA4 /* CalculatorBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		EE3B109B15B8FA9800054BA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		EE3B109D15B8FA9800054BA4 /* CalculatorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
+		EE3B10A915B9098300054BA4 /* CalculatorBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorBrain.h; sourceTree = "<group>"; };
+		EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorBrain.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 				EE3B109715B8FA9800054BA4 /* CalculatorAppDelegate.h */,
 				EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */,
 				EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */,
+				EE3B10A915B9098300054BA4 /* CalculatorBrain.h */,
+				EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */,
 				EE3B109D15B8FA9800054BA4 /* CalculatorViewController.h */,
 				EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */,
 				EE3B108F15B8FA9800054BA4 /* Supporting Files */,
@@ -164,6 +169,7 @@
 				EE3B109515B8FA9800054BA4 /* main.m in Sources */,
 				EE3B109915B8FA9800054BA4 /* CalculatorAppDelegate.m in Sources */,
 				EE3B109F15B8FA9800054BA4 /* CalculatorViewController.m in Sources */,
+				EE3B10AB15B9098300054BA4 /* CalculatorBrain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +281,7 @@
 				EE3B10A415B8FA9800054BA4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
