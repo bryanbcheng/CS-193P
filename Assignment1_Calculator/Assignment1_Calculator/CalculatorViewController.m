@@ -20,6 +20,7 @@
 @implementation CalculatorViewController
 
 @synthesize display = _display;
+@synthesize input = _input;
 @synthesize userIsInTheMiddeOfEnteringANumber = _userIsInTheMiddeOfEnteringANumber;
 @synthesize decimalPlaced = _decimalPlaced;
 @synthesize brain = _brain;
@@ -27,6 +28,10 @@
 - (CalculatorBrain *)brain {
     if (!_brain) _brain = [[CalculatorBrain alloc] init];
     return _brain;
+}
+
+- (void)appendInput:(NSString *)newInput {
+    self.input.text = [self.input.text stringByAppendingFormat:@"%@%@", newInput, @" "];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -60,6 +65,7 @@
 
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
+    [self appendInput:self.display.text];
     self.userIsInTheMiddeOfEnteringANumber = NO;
     self.decimalPlaced = NO;
 }
@@ -71,6 +77,7 @@
     NSString *operation = [sender currentTitle];
     double result = [self.brain performOperation:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
+    [self appendInput:operation];
 }
 
 - (IBAction)clearPressed {

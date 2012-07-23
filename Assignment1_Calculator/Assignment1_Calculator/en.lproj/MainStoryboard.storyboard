@@ -382,11 +382,19 @@
                                     <action selector="backspacePressed" destination="2" eventType="touchUpInside" id="fGe-Z2-BUe"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eiF-dZ-P7f">
+                                <rect key="frame" x="92" y="0.0" width="160" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="display" destination="Liv-K1-B7k" id="Ugi-D2-xXw"/>
+                        <outlet property="input" destination="eiF-dZ-P7f" id="4qg-im-R0Z"/>
                     </connections>
                 </viewController>
             </objects>
@@ -397,6 +405,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="input" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>
