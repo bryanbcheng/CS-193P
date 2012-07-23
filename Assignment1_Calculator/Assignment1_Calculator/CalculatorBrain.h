@@ -14,4 +14,6 @@
 
 - (double)performOperation:(NSString *)operation;
 
+- (void)clear;
+
 @end
