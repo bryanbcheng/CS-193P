@@ -34,6 +34,12 @@
     self.input.text = [self.input.text stringByAppendingFormat:@"%@%@", newInput, @" "];
 }
 
+- (void)removeEquals {
+    if ([self.input.text hasSuffix:@"= "]) {
+        self.input.text = [self.input.text substringToIndex:[self.input.text length] - 2];
+    }
+}
+
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = [sender currentTitle];
     
@@ -41,6 +47,7 @@
         self.display.text = [self.display.text stringByAppendingString:digit];
     } else {
         self.display.text = digit;
+        [self removeEquals];
         
         // Prevent multiple leading 0 fix
         if (![digit isEqualToString:@"0"]) {
@@ -56,6 +63,7 @@
         } else {
             // Start new number with decimal
             self.display.text = @"0.";
+            [self removeEquals];
         }
         
         self.userIsInTheMiddeOfEnteringANumber = YES;
@@ -65,24 +73,34 @@
 
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
+    [self removeEquals];
     [self appendInput:self.display.text];
     self.userIsInTheMiddeOfEnteringANumber = NO;
     self.decimalPlaced = NO;
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
+    [self removeEquals];
+    NSString *operation = [sender currentTitle];
+    
     if (self.userIsInTheMiddeOfEnteringANumber) {
+        if ([operation isEqualToString:@"+/-"]) {
+            self.display.text = [NSString stringWithFormat:@"%g", -[self.display.text doubleValue]];
+            return;
+        }
         [self enterPressed];
     }
-    NSString *operation = [sender currentTitle];
+    
     double result = [self.brain performOperation:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
     [self appendInput:operation];
+    [self appendInput:@"="];
 }
 
 - (IBAction)clearPressed {
     [self.brain clear];
     self.display.text = @"0";
+    self.input.text = @"";
     self.userIsInTheMiddeOfEnteringANumber = NO;
 }
 - (IBAction)backspacePressed {
@@ -96,6 +114,7 @@
     } else {
         // Reset display to 0 if backspace pushed after operation
         self.display.text = @"0";
+        [self removeEquals];
     }
 }
 

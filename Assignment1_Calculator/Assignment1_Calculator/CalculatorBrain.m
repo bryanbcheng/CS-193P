@@ -62,7 +62,9 @@
         double operand = [self popOperand];
         // Log cannot take negative numbers and log(0) = -inf
         if (operand > 0) result = sqrt(operand); 
-    } 
+    } else if ([operation isEqualToString:@"+/-"]) {
+        result = -[self popOperand];
+    }
     
     [self pushOperand:result];
     
