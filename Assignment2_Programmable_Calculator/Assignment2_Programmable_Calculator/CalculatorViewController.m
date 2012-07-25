@@ -14,6 +14,7 @@
 @property (nonatomic) BOOL userIsInTheMiddeOfEnteringANumber;
 @property (nonatomic) BOOL decimalPlaced;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSDictionary *testVariableValues;
 
 @end
 
@@ -24,11 +25,14 @@
 @synthesize userIsInTheMiddeOfEnteringANumber = _userIsInTheMiddeOfEnteringANumber;
 @synthesize decimalPlaced = _decimalPlaced;
 @synthesize brain = _brain;
+@synthesize testVariableValues = _testVariableValues;
 
 - (CalculatorBrain *)brain {
     if (!_brain) _brain = [[CalculatorBrain alloc] init];
     return _brain;
 }
+
+// No need for lazy instatiation of testVariableValues since nil is ok
 
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = [sender currentTitle];
@@ -88,6 +92,7 @@
     self.description.text = @"";
     self.userIsInTheMiddeOfEnteringANumber = NO;
     self.decimalPlaced = NO;
+    self.testVariableValues = nil;
 }
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddeOfEnteringANumber) {
@@ -124,16 +129,15 @@
         [self enterPressed];
     }
     
-    NSDictionary *variableValues;
     if ([testNum isEqualToString:@"Test 1"]) {
-        variableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:5], @"x", [NSNumber numberWithDouble:0], @"y", [NSNumber numberWithDouble:7], @"z", nil];
+        self.testVariableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:5], @"x", [NSNumber numberWithDouble:0], @"y", [NSNumber numberWithDouble:7], @"z", nil];
     } else if ([testNum isEqualToString:@"Test 2"]) {
-        variableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:-23], @"x", [NSNumber numberWithDouble:M_PI], @"y", [NSNumber numberWithDouble:sqrt(2)], @"z", nil];
+        self.testVariableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:-23], @"x", [NSNumber numberWithDouble:M_PI], @"y", [NSNumber numberWithDouble:sqrt(2)], @"z", nil];
     } else if ([testNum isEqualToString:@"Test 3"]) {
-        variableValues = nil;
+        self.testVariableValues = nil;
     }
     
-    self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program] usingVariableValues:variableValues]];
+    self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program] usingVariableValues:self.testVariableValues]];
     self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 

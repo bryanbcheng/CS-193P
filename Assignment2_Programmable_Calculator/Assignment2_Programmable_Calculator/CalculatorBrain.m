@@ -169,11 +169,8 @@
 }
 
 + (double)runProgram:(id)program {
-    NSMutableArray *stack;
-    if ([program isKindOfClass:[NSArray class]]) {
-        stack = [program mutableCopy];
-    }
-    return [self popOperandOffProgramStack:stack];
+    return [self runProgram:program
+        usingVariableValues:nil];
 }
 
 + (double)runProgram:(id)program
