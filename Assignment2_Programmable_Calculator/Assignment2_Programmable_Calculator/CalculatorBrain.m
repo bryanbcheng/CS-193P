@@ -10,12 +10,17 @@
 
 @interface CalculatorBrain()
 @property (nonatomic, strong) NSMutableArray *programStack;
+@property (nonatomic, strong) NSSet *twoOperandOperations;
+@property (nonatomic, strong) NSSet *oneOperandOperations;
+@property (nonatomic, strong) NSSet *noOperandOperations;
 @end
-
 
 @implementation CalculatorBrain
 
 @synthesize programStack = _programStack;
+@synthesize twoOperandOperations = _twoOperandOperations;
+@synthesize oneOperandOperations = _oneOperandOperations;
+@synthesize noOperandOperations = _noOperandOperations;
 
 - (NSMutableArray *)programStack {
     if (!_programStack) _programStack = [[NSMutableArray alloc] init];
@@ -26,41 +31,58 @@
     return [self.programStack copy];
 }
 
-+ (NSString *)describeProgram:(NSMutableArray *)stack {
++ (NSSet *)twoOperandOperations {
+    static NSSet *_twoOperandOperations = nil;
+    if (_twoOperandOperations == nil) {
+        _twoOperandOperations = [[NSSet alloc] initWithObjects:@"+", @"-", @"*", @"/", nil];
+    }
+    return _twoOperandOperations;
+}
+
++ (NSSet *)oneOperandOperations {
+    static NSSet *_oneOperandOperations = nil;
+    if (_oneOperandOperations == nil) {
+        _oneOperandOperations = [[NSSet alloc] initWithObjects:@"sin", @"cos", @"sqrt", @"log", @"+/-", nil];
+    }
+    return _oneOperandOperations;
+}
+
++ (NSSet *)noOperandOperations {
+    static NSSet *_noOperandOperations = nil;
+    if (_noOperandOperations == nil) {
+        _noOperandOperations = [[NSSet alloc] initWithObjects:@"π", @"e", nil];
+    }
+    return _noOperandOperations;
+}
+
++ (BOOL)isOperation:(NSString *)operation {
+    return [[self twoOperandOperations] containsObject:operation] ||
+           [[self oneOperandOperations] containsObject:operation] ||
+           [[self noOperandOperations] containsObject:operation];
+}
+
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
     NSString *description = @"";
     
     id topOfStack = [stack lastObject];
     if (topOfStack) [stack removeLastObject];
     
-    if ([topOfStack isKindOfClass:[NSNumber class]])
-    {
+    if ([topOfStack isKindOfClass:[NSNumber class]]) {
         description = [topOfStack stringValue];
     } else if ([topOfStack isKindOfClass:[NSString class]]) {
         NSString *symbol = topOfStack;
         
         // Need to add parantheses
-        if ([symbol isEqualToString:@"+"]) {
-            NSString *addend = [self describeProgram:stack];
-            description = [NSString stringWithFormat:@"%@ + %@", [self describeProgram:stack], addend];
-        } else if ([symbol isEqualToString:@"*"]) {
-            NSString *multiplier = [self describeProgram:stack];
-            description = [NSString stringWithFormat:@"%@ * %@", [self describeProgram:stack], multiplier];
-        } else if ([symbol isEqualToString:@"-"]) {
-            NSString *subtrahend = [self describeProgram:stack];
-            description = [NSString stringWithFormat:@"%@ - %@", [self describeProgram:stack], subtrahend];
-        } else if ([symbol isEqualToString:@"/"]) {
-            NSString *divisor = [self describeProgram:stack];
-            description = [NSString stringWithFormat:@"%@ / %@", [self describeProgram:stack], divisor];
-        } else if ([symbol isEqualToString:@"sin"]) {
-            description = [NSString stringWithFormat:@"sin(%@)", [self describeProgram:stack]];
-        } else if ([symbol isEqualToString:@"cos"]) {
-            description = [NSString stringWithFormat:@"cos(%@)", [self describeProgram:stack]];
-        } else if ([symbol isEqualToString:@"sqrt"]) {
-            description = [NSString stringWithFormat:@"sqrt(%@)", [self describeProgram:stack]];
-        } else if ([symbol isEqualToString:@"log"]) {
-            description = [NSString stringWithFormat:@"log(%@)", [self describeProgram:stack]];
-        } else if ([symbol isEqualToString:@"+/-"]) {
-            description = [NSString stringWithFormat:@"-(%@)", [self describeProgram:stack]];
+        if ([[self twoOperandOperations] containsObject:symbol]) {
+            NSString *secondNumber = [self descriptionOfTopOfStack:stack];
+            NSString *firstNumber = [self descriptionOfTopOfStack:stack];
+            description = [NSString stringWithFormat:@"%@ %@ %@", firstNumber, symbol, secondNumber];
+        } else if ([[self oneOperandOperations] containsObject:symbol]) {
+            if ([symbol isEqualToString:@"+/-"]) {
+                description = [NSString stringWithFormat:@"-(%@)", [self descriptionOfTopOfStack:stack]];
+            } else {
+                description = [NSString stringWithFormat:@"%@(%@)", symbol, [self descriptionOfTopOfStack:stack]];
+            }
         } else {
             // For variables, pi, e
             description = symbol;
@@ -79,9 +101,9 @@
     NSString *description = @"";
     while ([stack count] != 0) {
         if ([description isEqualToString:@""]) {
-            description = [self describeProgram:stack];
+            description = [self descriptionOfTopOfStack:stack];
         } else {
-            description = [NSString stringWithFormat:@"%@, %@", description, [self describeProgram:stack]];
+            description = [NSString stringWithFormat:@"%@, %@", description, [self descriptionOfTopOfStack:stack]];
         }
     }
     return description;
@@ -160,13 +182,31 @@
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
         
-        // replace variables with values
+        NSSet *variables = [CalculatorBrain variablesUsedInProgram:program];
+        
+        for (NSUInteger i = 0; i < [stack count]; i++) {
+            id item = [stack objectAtIndex:i];
+            if ([variables containsObject:item]) {
+                NSNumber *value = [variableValues objectForKey:item];
+                if (value) {
+                    [stack replaceObjectAtIndex:i withObject:value];
+                }
+            }
+        }
     }
     return [self popOperandOffProgramStack:stack];
 }
 
 + (NSSet *)variablesUsedInProgram:(id)program {
-    return nil;
+    NSSet *variables = [NSSet set];
+    if ([program isKindOfClass:[NSArray class]]) {
+        for (id item in program) {
+            if ([item isKindOfClass:[NSString class]] && ![self isOperation:item]) {
+                variables = [variables setByAddingObject:item];
+            }
+        }
+    }
+    return [variables count] > 0 ? variables : nil;
 }
 
 - (void)undoProgram {

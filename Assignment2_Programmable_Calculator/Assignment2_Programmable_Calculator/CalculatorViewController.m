@@ -117,4 +117,24 @@
     self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 
+- (IBAction)testPressed:(UIButton *)sender {
+    NSString *testNum = [sender currentTitle];
+    
+    if (self.userIsInTheMiddeOfEnteringANumber) {
+        [self enterPressed];
+    }
+    
+    NSDictionary *variableValues;
+    if ([testNum isEqualToString:@"Test 1"]) {
+        variableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:5], @"x", [NSNumber numberWithDouble:0], @"y", [NSNumber numberWithDouble:7], @"z", nil];
+    } else if ([testNum isEqualToString:@"Test 2"]) {
+        variableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:-23], @"x", [NSNumber numberWithDouble:M_PI], @"y", [NSNumber numberWithDouble:sqrt(2)], @"z", nil];
+    } else if ([testNum isEqualToString:@"Test 3"]) {
+        variableValues = nil;
+    }
+    
+    self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program] usingVariableValues:variableValues]];
+    self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
+}
+
 @end
