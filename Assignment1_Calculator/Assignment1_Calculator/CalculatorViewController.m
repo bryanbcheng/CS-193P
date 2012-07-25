@@ -75,6 +75,7 @@
     [self.brain pushOperand:[self.display.text doubleValue]];
     [self removeEquals];
     [self appendInput:self.display.text];
+    [self appendInput:@"="];
     self.userIsInTheMiddeOfEnteringANumber = NO;
     self.decimalPlaced = NO;
 }
@@ -102,6 +103,7 @@
     self.display.text = @"0";
     self.input.text = @"";
     self.userIsInTheMiddeOfEnteringANumber = NO;
+    self.decimalPlaced = NO;
 }
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddeOfEnteringANumber) {
