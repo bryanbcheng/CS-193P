@@ -20,7 +20,7 @@
 @implementation CalculatorViewController
 
 @synthesize display = _display;
-@synthesize input = _input;
+@synthesize description = _description;
 @synthesize userIsInTheMiddeOfEnteringANumber = _userIsInTheMiddeOfEnteringANumber;
 @synthesize decimalPlaced = _decimalPlaced;
 @synthesize brain = _brain;
@@ -30,16 +30,6 @@
     return _brain;
 }
 
-- (void)appendInput:(NSString *)newInput {
-    self.input.text = [self.input.text stringByAppendingFormat:@"%@%@", newInput, @" "];
-}
-
-- (void)removeEquals {
-    if ([self.input.text hasSuffix:@"= "]) {
-        self.input.text = [self.input.text substringToIndex:[self.input.text length] - 2];
-    }
-}
-
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = [sender currentTitle];
     
@@ -47,7 +37,6 @@
         self.display.text = [self.display.text stringByAppendingString:digit];
     } else {
         self.display.text = digit;
-        [self removeEquals];
         
         // Prevent multiple leading 0 fix
         if (![digit isEqualToString:@"0"]) {
@@ -63,7 +52,6 @@
         } else {
             // Start new number with decimal
             self.display.text = @"0.";
-            [self removeEquals];
         }
         
         self.userIsInTheMiddeOfEnteringANumber = YES;
@@ -73,14 +61,12 @@
 
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
-    [self removeEquals];
-    [self appendInput:self.display.text];
+    self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
     self.userIsInTheMiddeOfEnteringANumber = NO;
     self.decimalPlaced = NO;
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
-    [self removeEquals];
     NSString *operation = [sender currentTitle];
     
     if (self.userIsInTheMiddeOfEnteringANumber) {
@@ -93,29 +79,42 @@
     
     double result = [self.brain performOperation:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
-    [self appendInput:operation];
-    [self appendInput:@"="];
+    self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 
 - (IBAction)clearPressed {
     [self.brain clear];
     self.display.text = @"0";
-    self.input.text = @"";
+    self.description.text = @"";
     self.userIsInTheMiddeOfEnteringANumber = NO;
+    self.decimalPlaced = NO;
 }
 - (IBAction)backspacePressed {
     if (self.userIsInTheMiddeOfEnteringANumber) {
         if ([self.display.text length] == 1) {
-            self.display.text = @"0";
+            self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program]]];
             self.userIsInTheMiddeOfEnteringANumber = NO;
         } else {
             self.display.text = [self.display.text substringToIndex:[self.display.text length] - 1];
         }
     } else {
-        // Reset display to 0 if backspace pushed after operation
-        self.display.text = @"0";
-        [self removeEquals];
+        // Remove top item from stack
+        [self.brain undoProgram];
+        self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program]]];
+        self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
     }
+}
+
+- (IBAction)variablePressed:(UIButton *)sender {
+    NSString *variable = [sender currentTitle];
+    
+    if (self.userIsInTheMiddeOfEnteringANumber) {
+        [self enterPressed];
+    }
+    
+    [self.brain pushVariable:variable];
+    self.display.text = variable;
+    self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
 }
 
 @end
