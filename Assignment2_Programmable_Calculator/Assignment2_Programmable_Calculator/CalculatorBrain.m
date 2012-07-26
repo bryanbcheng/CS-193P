@@ -68,6 +68,28 @@
     return string;
 }
 
++ (NSString *)findMostRecentOperation:(NSString *)string {
+    NSString *searchString = [self suppressParentheses:string];
+    
+    int i = 0;
+    int openParentheses = 0;
+    while (i < [searchString length]) {
+        NSString *letter = [searchString substringWithRange:NSMakeRange(i, 1)];
+        if ([letter isEqualToString:@"("]) {
+            openParentheses++;
+        } else if ([letter isEqualToString:@")"]) {
+            openParentheses--;
+        }
+        if (openParentheses > 0) continue;
+        
+        if ([letter isEqualToString:@"+"] || [letter isEqualToString:@"-"] ||
+            [letter isEqualToString:@"*"] || [letter isEqualToString:@"/"])
+            return letter;
+    }
+    
+    return nil;
+}
+
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
     NSString *description = @"";
     
