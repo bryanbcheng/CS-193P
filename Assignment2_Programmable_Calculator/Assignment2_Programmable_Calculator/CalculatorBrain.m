@@ -61,6 +61,13 @@
            [[self noOperandOperations] containsObject:operation];
 }
 
++ (NSString *)suppressParentheses:(NSString *)string {
+    if ([string hasPrefix:@"("] && [string hasSuffix:@")"]) {
+        return [string substringWithRange:NSMakeRange(1, [string length] - 2)];
+    }
+    return string;
+}
+
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
     NSString *description = @"";
     
@@ -72,16 +79,17 @@
     } else if ([topOfStack isKindOfClass:[NSString class]]) {
         NSString *symbol = topOfStack;
         
-        // Need to add parantheses
+        // Need to remove extra parentheses
         if ([[self twoOperandOperations] containsObject:symbol]) {
             NSString *secondNumber = [self descriptionOfTopOfStack:stack];
             NSString *firstNumber = [self descriptionOfTopOfStack:stack];
-            description = [NSString stringWithFormat:@"%@ %@ %@", firstNumber, symbol, secondNumber];
+            description = [NSString stringWithFormat:@"(%@ %@ %@)", firstNumber, symbol, secondNumber];
         } else if ([[self oneOperandOperations] containsObject:symbol]) {
+            NSString *number = [self suppressParentheses:[self descriptionOfTopOfStack:stack]];
             if ([symbol isEqualToString:@"+/-"]) {
-                description = [NSString stringWithFormat:@"-(%@)", [self descriptionOfTopOfStack:stack]];
+                description = [NSString stringWithFormat:@"-(%@)", number];
             } else {
-                description = [NSString stringWithFormat:@"%@(%@)", symbol, [self descriptionOfTopOfStack:stack]];
+                description = [NSString stringWithFormat:@"%@(%@)", symbol, number];
             }
         } else {
             // For variables, pi, e
@@ -98,12 +106,13 @@
         stack = [program mutableCopy];
     }
     
+    // To list everything in stack
     NSString *description = @"";
     while ([stack count] != 0) {
         if ([description isEqualToString:@""]) {
-            description = [self descriptionOfTopOfStack:stack];
+            description = [self suppressParentheses:[self descriptionOfTopOfStack:stack]];
         } else {
-            description = [NSString stringWithFormat:@"%@, %@", description, [self descriptionOfTopOfStack:stack]];
+            description = [NSString stringWithFormat:@"%@, %@", description, [self suppressParentheses:[self descriptionOfTopOfStack:stack]]];
         }
     }
     return description;
