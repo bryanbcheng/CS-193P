@@ -67,7 +67,7 @@
     }
     return string;
 }
-
+/*
 + (NSString *)findMostRecentOperation:(NSString *)string {
     NSString *searchString = [self suppressParentheses:string];
     
@@ -89,7 +89,7 @@
     
     return nil;
 }
-
+*/
 + (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack {
     NSString *description = @"";
     
