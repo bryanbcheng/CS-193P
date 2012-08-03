@@ -16,6 +16,7 @@
 		EE3B109C15B8FA9800054BA4 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */; };
 		EE3B109F15B8FA9800054BA4 /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */; };
 		EE3B10AB15B9098300054BA4 /* CalculatorBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */; };
+		EE8224E915CBBE54005D737E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8224E815CBBE54005D737E /* AxesDrawer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		EE3B10A915B9098300054BA4 /* CalculatorBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorBrain.h; sourceTree = "<group>"; };
 		EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorBrain.m; sourceTree = "<group>"; };
+		EE8224E715CBBE54005D737E /* AxesDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxesDrawer.h; sourceTree = "<group>"; };
+		EE8224E815CBBE54005D737E /* AxesDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxesDrawer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 		EE3B108E15B8FA9800054BA4 /* Assignment3_Graphing_Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				EE8224E715CBBE54005D737E /* AxesDrawer.h */,
+				EE8224E815CBBE54005D737E /* AxesDrawer.m */,
 				EE3B109715B8FA9800054BA4 /* CalculatorAppDelegate.h */,
 				EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */,
 				EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */,
@@ -170,6 +175,7 @@
 				EE3B109915B8FA9800054BA4 /* CalculatorAppDelegate.m in Sources */,
 				EE3B109F15B8FA9800054BA4 /* CalculatorViewController.m in Sources */,
 				EE3B10AB15B9098300054BA4 /* CalculatorBrain.m in Sources */,
+				EE8224E915CBBE54005D737E /* AxesDrawer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

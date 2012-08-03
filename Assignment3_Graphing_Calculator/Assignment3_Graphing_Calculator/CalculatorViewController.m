@@ -141,31 +141,8 @@
     self.variablesDisplay.text = @"";
 }
 
-- (IBAction)testPressed:(UIButton *)sender {
-    NSString *testNum = [sender currentTitle];
-    
-    if (self.userIsInTheMiddeOfEnteringANumber) {
-        [self enterPressed];
-    }
-    
-    // Create dictionary for various tests
-    if ([testNum isEqualToString:@"Test 1"]) {
-        self.testVariableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:5], @"x", [NSNumber numberWithDouble:7], @"z", nil];
-    } else if ([testNum isEqualToString:@"Test 2"]) {
-        self.testVariableValues = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:-23], @"x", [NSNumber numberWithDouble:M_PI], @"y", [NSNumber numberWithDouble:sqrt(2)], @"z", nil];
-    } else if ([testNum isEqualToString:@"Test 3"]) {
-        self.testVariableValues = nil;
-    }
-    
-    // Update display
-    self.display.text = [NSString stringWithFormat:@"%g", [CalculatorBrain runProgram:[self.brain program] usingVariableValues:self.testVariableValues]];
-    self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
-    self.variablesDisplay.text = @"";
-    for (NSString *var in [CalculatorBrain variablesUsedInProgram:[self.brain program]]) {
-        NSString *variableValue = [self.testVariableValues objectForKey:var];
-        if (!variableValue) variableValue = @"0";
-        self.variablesDisplay.text = [self.variablesDisplay.text stringByAppendingFormat:@"%@ = %@ ", var, variableValue];
-    }
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return YES;
 }
 
 @end
