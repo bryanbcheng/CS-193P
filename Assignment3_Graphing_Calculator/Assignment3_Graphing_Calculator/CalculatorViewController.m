@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalculatorViewController ()
 
@@ -37,6 +38,12 @@
 }
 
 // No need for lazy instatiation of testVariableValues since nil is ok
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowGraph"]) {
+        [segue.destinationViewController setProgramStack:[self.brain program]];
+    }
+}
 
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = [sender currentTitle];
@@ -139,6 +146,11 @@
     self.display.text = variable;
     self.description.text = [CalculatorBrain descriptionOfProgram:[self.brain program]];
     self.variablesDisplay.text = @"";
+}
+
+- (IBAction)graphPressed {
+    //segue
+    [self performSegueWithIdentifier:@"ShowGraph" sender:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {

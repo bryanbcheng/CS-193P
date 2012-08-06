@@ -437,6 +437,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="graphPressed" destination="2" eventType="touchUpInside" id="S8w-uP-j8U"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -446,10 +449,36 @@
                         <outlet property="description" destination="Q0t-PU-jgt" id="U4G-0r-BTy"/>
                         <outlet property="display" destination="Liv-K1-B7k" id="Ugi-D2-xXw"/>
                         <outlet property="variablesDisplay" destination="0gq-gs-xzR" id="YvR-SG-5HB"/>
+                        <segue destination="MRX-Pc-iMQ" kind="push" identifier="ShowGraph" id="Cpi-rL-HWJ"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="799" y="156"/>
+        </scene>
+        <!--Graph View Controller - Graph-->
+        <scene sceneID="LJR-RB-qeR">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ak-5F-ukW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="MRX-Pc-iMQ" customClass="GraphViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q8l-Lb-7Ls">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="Qky-5A-YqP" customClass="GraphView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Graph" id="00K-FU-g5R"/>
+                    <connections>
+                        <outlet property="graphView" destination="Qky-5A-YqP" id="xw4-x6-cG7"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1254" y="156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mlL-Fh-fZL">
@@ -477,6 +506,18 @@
                 <relationship kind="outlet" name="description" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="variablesDisplay" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GraphView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dataSource"/>
+            </relationships>
+        </class>
+        <class className="GraphViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="graphView" candidateClass="GraphView"/>
             </relationships>
         </class>
     </classes>
