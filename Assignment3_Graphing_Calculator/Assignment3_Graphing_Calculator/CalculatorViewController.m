@@ -42,6 +42,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowGraph"]) {
         [segue.destinationViewController setProgramStack:[self.brain program]];
+        [segue.destinationViewController setProgramDescription:[CalculatorBrain descriptionOfProgram:[self.brain program]]];
     }
 }
 
@@ -149,6 +150,10 @@
 }
 
 - (IBAction)graphPressed {
+    if (self.userIsInTheMiddeOfEnteringANumber) {
+        [self enterPressed];
+    }
+    
     //segue
     [self performSegueWithIdentifier:@"ShowGraph" sender:self];
 }

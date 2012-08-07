@@ -15,6 +15,8 @@
 @property (nonatomic) CGPoint origin;
 @property (nonatomic) BOOL pointInitialized;
 
+@property (nonatomic, strong) NSUserDefaults *defaults;
+
 @end
 
 @implementation GraphView
@@ -25,28 +27,47 @@
 @synthesize origin = _origin;
 @synthesize pointInitialized = _pointInitialized;
 
+@synthesize defaults = _defaults;
+
 @synthesize dataSource = _dataSource;
 
 - (CGFloat)scale {
     if (!_scale) {
-        return DEFAULT_SCALE; // don't allow zero scale
-    } else {
-        return _scale;
+        NSNumber *savedScale = [self.defaults objectForKey:@"scale"];
+        if (savedScale) {
+            _scale = savedScale.floatValue;
+        } else {
+            _scale = DEFAULT_SCALE; // don't allow zero scale
+        }
     }
+    
+    return _scale;
 }
 
 - (void)setScale:(CGFloat)scale {
     if (scale != _scale) {
         _scale = scale;
         [self setNeedsDisplay]; // any time our scale changes, call for redraw
+        
+        [self.defaults setObject:[NSNumber numberWithFloat:_scale] forKey:@"scale"];
+        [self.defaults synchronize];
     }
 }
 
 - (CGPoint)origin {
     if (!self.pointInitialized) {
-        CGPoint origin = CGPointMake(self.bounds.origin.x + self.bounds.size.width / 2, self.bounds.origin.y + self.bounds.size.height / 2);
+        NSNumber *savedOriginX = [self.defaults objectForKey:@"originX"];
+        NSNumber *savedOriginY = [self.defaults objectForKey:@"originY"];
+        
+        CGPoint origin;
+        if (savedOriginX && savedOriginY) {
+            origin = CGPointMake(savedOriginX.floatValue, savedOriginY.floatValue);
+        } else {
+            origin = CGPointMake(self.bounds.origin.x + self.bounds.size.width / 2, self.bounds.origin.y + self.bounds.size.height / 2);
+        }
         
         _origin = origin;
+        self.pointInitialized = YES;
     }
     return _origin;
 }
@@ -56,6 +77,48 @@
         _origin.x = origin.x;
         _origin.y = origin.y;
         [self setNeedsDisplay];
+        
+        [self.defaults setObject:[NSNumber numberWithFloat:_origin.x] forKey:@"originX"];
+        [self.defaults setObject:[NSNumber numberWithFloat:_origin.y] forKey:@"originY"];
+        [self.defaults synchronize];
+    }
+}
+
+- (NSUserDefaults *)defaults {
+    if (!_defaults) {
+        _defaults = [NSUserDefaults standardUserDefaults];
+    }
+    
+    return _defaults;
+}
+
+- (void)pinch:(UIPinchGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        self.scale *= gesture.scale;
+        gesture.scale = 1;
+    }
+}
+
+- (void)pan:(UIPanGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        CGPoint translation = [gesture translationInView:self];
+        CGPoint newOrigin = self.origin;
+        newOrigin.x += translation.x;
+        newOrigin.y += translation.y;
+        self.origin = newOrigin;
+        [gesture setTranslation:CGPointZero inView:self];
+    }
+}
+
+- (void)tripleTap:(UITapGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateRecognized) {
+        CGPoint newOrigin = [gesture locationInView:self];
+        self.origin = newOrigin;
     }
 }
 
@@ -84,22 +147,18 @@
                          scale:self.scale];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    CGContextSetLineWidth(context, 1.0f);
-    //CGContextBeginPath(context);
+    CGContextBeginPath(context);
     
-    NSLog(@"%g %g", self.bounds.size.width, self.contentScaleFactor);
     // pixel refers to the point's pixel coordinate on screen
     // math refers to the mathematical point
     for (double i = 0; i < self.bounds.size.width * self.contentScaleFactor; i++) {
         double pixelX = i / self.contentScaleFactor;
         double mathX = (pixelX - self.origin.x) / self.scale;
-        double mathY = [self.dataSource yValueForXCoordinate:mathX
-                                 forGraphView:self];
+        double mathY = [self.dataSource yValueForGraphView:self
+                                             atXCoordinate:mathX];
         double pixelY = self.origin.y - mathY * self.scale;
         if (i == 0) CGContextMoveToPoint(context, pixelX, pixelY);
         else CGContextAddLineToPoint(context, pixelX, pixelY);
-        //NSLog(@"%g %g %g %g", pixelX, pixelY, mathX, mathY);
     }
     
     CGContextStrokePath(context);

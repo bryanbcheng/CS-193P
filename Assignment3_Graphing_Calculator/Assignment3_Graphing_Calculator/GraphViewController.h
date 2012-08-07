@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSArray *programStack;
 
+- (void)setProgramDescription:(NSString *)description;
+
 @end
