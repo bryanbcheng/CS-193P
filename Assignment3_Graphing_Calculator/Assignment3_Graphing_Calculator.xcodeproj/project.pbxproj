@@ -13,12 +13,13 @@
 		EE3B109315B8FA9800054BA4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE3B109115B8FA9800054BA4 /* InfoPlist.strings */; };
 		EE3B109515B8FA9800054BA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109415B8FA9800054BA4 /* main.m */; };
 		EE3B109915B8FA9800054BA4 /* CalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */; };
-		EE3B109C15B8FA9800054BA4 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */; };
+		EE3B109C15B8FA9800054BA4 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3B109A15B8FA9800054BA4 /* iPhone.storyboard */; };
 		EE3B109F15B8FA9800054BA4 /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */; };
 		EE3B10AB15B9098300054BA4 /* CalculatorBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */; };
 		EE8224E915CBBE54005D737E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8224E815CBBE54005D737E /* AxesDrawer.m */; };
 		EE8224F515CF6CFD005D737E /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8224F415CF6CFD005D737E /* GraphView.m */; };
 		EE8224F815CF6E7F005D737E /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8224F715CF6E7F005D737E /* GraphViewController.m */; };
+		EE82251315D3F20A005D737E /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE82251215D3F20A005D737E /* iPad.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +33,7 @@
 		EE3B109615B8FA9800054BA4 /* Assignment3_Graphing_Calculator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Assignment3_Graphing_Calculator-Prefix.pch"; sourceTree = "<group>"; };
 		EE3B109715B8FA9800054BA4 /* CalculatorAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorAppDelegate.h; sourceTree = "<group>"; };
 		EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorAppDelegate.m; sourceTree = "<group>"; };
-		EE3B109B15B8FA9800054BA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		EE3B109B15B8FA9800054BA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		EE3B109D15B8FA9800054BA4 /* CalculatorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		EE3B109E15B8FA9800054BA4 /* CalculatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		EE3B10A915B9098300054BA4 /* CalculatorBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorBrain.h; sourceTree = "<group>"; };
@@ -43,6 +44,8 @@
 		EE8224F415CF6CFD005D737E /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		EE8224F615CF6E7F005D737E /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
 		EE8224F715CF6E7F005D737E /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
+		EE82251215D3F20A005D737E /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
+		EEF7AAF615DA492900C08C59 /* SplitViewBarButtonItemPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewBarButtonItemPresenter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,7 @@
 		EE3B108E15B8FA9800054BA4 /* Assignment3_Graphing_Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				EEF7AAF615DA492900C08C59 /* SplitViewBarButtonItemPresenter.h */,
 				EE8224E715CBBE54005D737E /* AxesDrawer.h */,
 				EE8224E815CBBE54005D737E /* AxesDrawer.m */,
 				EE8224F315CF6CFD005D737E /* GraphView.h */,
@@ -97,7 +101,8 @@
 				EE8224F715CF6E7F005D737E /* GraphViewController.m */,
 				EE3B109715B8FA9800054BA4 /* CalculatorAppDelegate.h */,
 				EE3B109815B8FA9800054BA4 /* CalculatorAppDelegate.m */,
-				EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */,
+				EE3B109A15B8FA9800054BA4 /* iPhone.storyboard */,
+				EE82251215D3F20A005D737E /* iPad.storyboard */,
 				EE3B10A915B9098300054BA4 /* CalculatorBrain.h */,
 				EE3B10AA15B9098300054BA4 /* CalculatorBrain.m */,
 				EE3B109D15B8FA9800054BA4 /* CalculatorViewController.h */,
@@ -170,7 +175,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE3B109315B8FA9800054BA4 /* InfoPlist.strings in Resources */,
-				EE3B109C15B8FA9800054BA4 /* MainStoryboard.storyboard in Resources */,
+				EE3B109C15B8FA9800054BA4 /* iPhone.storyboard in Resources */,
+				EE82251315D3F20A005D737E /* iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,12 +208,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		EE3B109A15B8FA9800054BA4 /* MainStoryboard.storyboard */ = {
+		EE3B109A15B8FA9800054BA4 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				EE3B109B15B8FA9800054BA4 /* en */,
 			);
-			name = MainStoryboard.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -264,7 +270,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Assignment3_Graphing_Calculator/Assignment3_Graphing_Calculator-Prefix.pch";
 				INFOPLIST_FILE = "Assignment3_Graphing_Calculator/Assignment3_Graphing_Calculator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Assignment3_Graphing_Calculator;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -275,7 +283,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Assignment3_Graphing_Calculator/Assignment3_Graphing_Calculator-Prefix.pch";
 				INFOPLIST_FILE = "Assignment3_Graphing_Calculator/Assignment3_Graphing_Calculator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Assignment3_Graphing_Calculator;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
