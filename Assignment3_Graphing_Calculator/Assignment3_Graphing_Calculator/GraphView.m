@@ -157,8 +157,13 @@
         double mathY = [self.dataSource yValueForGraphView:self
                                              atXCoordinate:mathX];
         double pixelY = self.origin.y - mathY * self.scale;
-        if (i == 0) CGContextMoveToPoint(context, pixelX, pixelY);
-        else CGContextAddLineToPoint(context, pixelX, pixelY);
+        
+        if ([[self.dataSource drawMode] isEqualToString:@"Line"]) {
+            if (i == 0) CGContextMoveToPoint(context, pixelX, pixelY);
+            else CGContextAddLineToPoint(context, pixelX, pixelY);
+        } else if ([[self.dataSource drawMode] isEqualToString:@"Dot"]) {
+            CGContextFillRect(context, CGRectMake(pixelX, pixelY, 1 / self.contentScaleFactor, 1 / self.contentScaleFactor));
+        }
     }
     
     CGContextStrokePath(context);

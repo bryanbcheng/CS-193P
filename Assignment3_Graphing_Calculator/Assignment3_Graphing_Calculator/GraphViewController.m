@@ -14,7 +14,8 @@
 
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 @property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UILabel *toolbarDescription;
+@property (nonatomic, weak) IBOutlet UILabel *toolbarDescription;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *drawModeSwitch;
 
 @end
 
@@ -25,6 +26,7 @@
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 @synthesize toolbar = _toolbar; 
 @synthesize toolbarDescription = _toolbarDescription;
+@synthesize drawModeSwitch = _drawModeSwitch;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem {
     if (_splitViewBarButtonItem != splitViewBarButtonItem) { 
@@ -58,11 +60,20 @@
     self.graphView.dataSource = self;
 }
 
+- (IBAction)drawModeSwitched:(UISegmentedControl *)sender {
+    [self.graphView setNeedsDisplay];
+}
+
 - (float)yValueForGraphView:(GraphView *)sender
               atXCoordinate:(float)x
 {
     NSDictionary *xValue = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:x], @"x", nil];
     return [CalculatorBrain runProgram:self.programStack usingVariableValues:xValue];
+}
+
+- (NSString *)drawMode
+{
+    return [self.drawModeSwitch titleForSegmentAtIndex:[self.drawModeSwitch selectedSegmentIndex]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -71,6 +82,7 @@
 }
 - (void)viewDidUnload {
     [self setToolbarDescription:nil];
+    [self setDrawModeSwitch:nil];
     [super viewDidUnload];
 }
 @end

@@ -13,6 +13,7 @@
 @protocol GraphViewDataSource <NSObject>
 - (float)yValueForGraphView:(GraphView *)sender
               atXCoordinate:(float)x;
+- (NSString *)drawMode;
 @end
 
 @interface GraphView : UIView
