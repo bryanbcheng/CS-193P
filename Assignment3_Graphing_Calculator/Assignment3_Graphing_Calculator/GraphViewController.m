@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet GraphView *graphView;
 @property (nonatomic, weak) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UILabel *toolbarDescription;
 
 @end
 
@@ -23,6 +24,7 @@
 @synthesize graphView = _graphView;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 @synthesize toolbar = _toolbar; 
+@synthesize toolbarDescription = _toolbarDescription;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem {
     if (_splitViewBarButtonItem != splitViewBarButtonItem) { 
@@ -43,6 +45,7 @@
 
 - (void)setProgramDescription:(NSString *)description {
     self.navigationItem.title = description;
+    self.toolbarDescription.text = description;
 }
 
 - (void)setGraphView:(GraphView *)graphView {
@@ -65,5 +68,9 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+- (void)viewDidUnload {
+    [self setToolbarDescription:nil];
+    [super viewDidUnload];
 }
 @end
