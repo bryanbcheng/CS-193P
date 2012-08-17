@@ -43,7 +43,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowGraph"]) {
         [segue.destinationViewController setProgramStack:[self.brain program]];
-        [segue.destinationViewController setProgramDescription:[CalculatorBrain descriptionOfProgram:[self.brain program]]];
     }
 }
 
@@ -167,7 +166,6 @@
     
     if ([self splitViewGraphViewController]) {
         [[self splitViewGraphViewController] setProgramStack:[self.brain program]];
-        [[self splitViewGraphViewController] setProgramDescription:[CalculatorBrain descriptionOfProgram:[self.brain program]]];
     } else {
         //segue
         [self performSegueWithIdentifier:@"ShowGraph" sender:self];

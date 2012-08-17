@@ -40,14 +40,17 @@
     }
 }
 
-- (void)setProgramStack:(NSArray *)programStack {
-    _programStack = programStack;
-    [self.graphView setNeedsDisplay];
-}
-
 - (void)setProgramDescription:(NSString *)description {
     self.navigationItem.title = description;
     self.toolbarDescription.text = description;
+}
+
+- (void)setProgramStack:(NSArray *)programStack {
+    _programStack = programStack;
+    
+    [self setProgramDescription:[CalculatorBrain descriptionOfProgram:programStack]];
+    
+    [self.graphView setNeedsDisplay];
 }
 
 - (void)setGraphView:(GraphView *)graphView {

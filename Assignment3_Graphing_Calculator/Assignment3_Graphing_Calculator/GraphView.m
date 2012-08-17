@@ -139,7 +139,6 @@
     return self;
 }
 
-
 - (void)drawRect:(CGRect)rect {
     // Draw axes
     [AxesDrawer drawAxesInRect:self.bounds
